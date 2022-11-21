@@ -1,0 +1,14 @@
+spring:
+  config:
+    activate:
+      on:
+        profile:
+          active: prod
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/test
+    username: postgres
+    password: password123
+  logging:
+    level:
+      org.springframework.data.r2dbc: Debug
+

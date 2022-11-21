@@ -1,0 +1,60 @@
+plugins {
+	id 'java'
+	id 'maven-publish'
+	id 'application'
+}
+application {
+	mainClass = 'org.gradle.sample.Main'
+}
+
+repositories {
+	mavenLocal()
+	maven {
+		url = uri('http://oss.jfrog.org/artifactory/oss-snapshot-local/')
+		allowInsecureProtocol = true
+	}
+
+	maven {
+		url = uri('https://repo.spring.io/milestone')
+		allowInsecureProtocol = true
+	}
+
+	maven {
+		url = uri('https://repo.maven.apache.org/maven2/')
+		allowInsecureProtocol = true
+	}
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc:2.7.5'
+	implementation 'org.springframework.boot:spring-boot-starter-webflux:2.7.5'
+	implementation 'org.projectlombok:lombok:1.18.24'
+	implementation 'io.springfox:springfox-swagger2:3.0.0'
+	implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+	implementation 'io.springfox:springfox-boot-starter:3.0.0'
+	implementation 'io.springfox:springfox-spring-webflux:3.0.0'
+	runtimeOnly 'com.h2database:h2:2.1.214'
+	runtimeOnly 'io.r2dbc:r2dbc-h2:1.0.0.RELEASE'
+	runtimeOnly 'io.r2dbc:r2dbc-postgresql:0.8.13.RELEASE'
+	runtimeOnly 'org.postgresql:postgresql:42.5.0'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.5'
+	testImplementation 'io.projectreactor:reactor-test:3.4.24'
+}
+
+group = 'com.reactive.examples'
+version = '0.0.1-SNAPSHOT'
+description = 'reactive-examples'
+java.sourceCompatibility = JavaVersion.VERSION_1_8
+
+publishing {
+	publications {
+		maven(MavenPublication) {
+			from(components.java)
+		}
+	}
+}
+
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
